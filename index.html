@@ -17,42 +17,121 @@
         }
     </script>
     <style>
-        .bg-sky-gradient { 
+        .bg-sky-gradient {
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #dbeafe 100%);
             background-size: 200% 200%;
             animation: gradientShift 8s ease infinite;
         }
-        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .interactive-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .interactive-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1); }
+        .interactive-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -5px rgba(0,0,0,0.1); }
         .btn-hover { transition: transform 0.2s, background-color 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .btn-hover:hover { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .btn-hover:active { transform: scale(0.98); }
-        
-        .point-list li { position: relative; padding-left: 2rem; margin-bottom: 1rem; }
-        .point-list li::before { content: '✨'; position: absolute; left: 0; top: 0.1rem; font-size: 1.25rem; }
-        
-        .pain-list li { position: relative; padding-left: 2rem; margin-bottom: 1rem; color: #4b5563; }
-        .pain-list li::before { content: '⚠️'; position: absolute; left: 0; top: 0.1rem; font-size: 1.1rem; opacity: 0.7;}
-        
-        .giant-number { font-size: 10rem; line-height: 1; font-weight: 800; opacity: 0.25; color: white; position: absolute; top: -10px; right: 10px; pointer-events: none; }
-        
-        /* 翻轉卡片設計 */
-        .flip-container { perspective: 1000px; position: relative; width: 100%; min-height: 500px; }
-        .flip-card { width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; position: absolute; top: 0; left: 0; }
+
+        .pain-list { list-style: none; padding: 0; margin: 0; }
+        .pain-list li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 0.75rem;
+            color: #4b5563;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .pain-list li::before {
+            content: '⚠️';
+            position: absolute;
+            left: 0; top: 0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .point-list { list-style: none; padding: 0; margin: 0; }
+        .point-list li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .point-list li::before {
+            content: '✨';
+            position: absolute;
+            left: 0; top: 0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .giant-number {
+            font-size: 10rem; line-height: 1; font-weight: 800;
+            opacity: 0.25; color: white;
+            position: absolute; top: -10px; right: 10px;
+            pointer-events: none;
+        }
+
+        /* ✨ PERFECTED FLIP CARD CSS FOR MOBILE ✨ */
+        .flip-container {
+            perspective: 1000px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .flip-card {
+            width: 100%;
+            position: relative;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            flex: 1;
+            display: flex;
+        }
         .flip-container.flipped .flip-card { transform: rotateY(180deg); }
+
+        .flip-face {
+            width: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 2.5rem;
+        }
         
-        .flip-face { width: 100%; height: 100%; backface-visibility: hidden; position: absolute; top: 0; left: 0; display: flex; flex-direction: column; justify-content: center; }
-        .flip-front { background-color: #ffffff; z-index: 2; border-radius: 0 2.5rem 2.5rem 0;}
-        .flip-back { background-color: #f8fafc; transform: rotateY(180deg); border-radius: 0 2.5rem 2.5rem 0;}
+        .flip-front { 
+            background-color: #ffffff; 
+            border-radius: 0 2.5rem 2.5rem 0;
+            z-index: 2;
+        }
         
-        @media not all and (min-resolution:.001dpcm) { @supports (-webkit-appearance:none) { .flip-face { backface-visibility: visible; } .flip-container.flipped .flip-front { display: none; } .flip-container:not(.flipped) .flip-back { display: none; } } }
+        .flip-back { 
+            background-color: #f8fafc; 
+            transform: rotateY(180deg); 
+            border-radius: 0 2.5rem 2.5rem 0;
+            position: absolute; /* Only back needs absolute to overlap front */
+            top: 0; left: 0; right: 0; bottom: 0;
+        }
         
+        @media (max-width: 768px) {
+            .flip-face { 
+                padding: 1.5rem; 
+            }
+            .flip-front { border-radius: 0 0 2.5rem 2.5rem;}
+            .flip-back { border-radius: 0 0 2.5rem 2.5rem;}
+            /* On mobile, front face defines the height naturally, back face fills it */
+        }
+
+        /* Safari iOS fix */
+        @media not all and (min-resolution:.001dpcm) { 
+            @supports (-webkit-appearance:none) { 
+                .flip-face { backface-visibility: visible; } 
+                .flip-container.flipped .flip-front { display: none; } 
+                .flip-container:not(.flipped) .flip-back { display: none; } 
+            } 
+        }
+
         body { scroll-snap-type: y proximity; overflow-x: hidden; }
-        .snap-section { scroll-snap-align: start; scroll-margin-top: 0; }
+        .snap-section { scroll-snap-align: start; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased selection:bg-blue-500 selection:text-white">
@@ -108,9 +187,9 @@
     <!-- 🌟 AREA 1: TLP Development 🌟 -->
     <section id="area1" class="snap-section min-h-[100dvh] flex flex-col justify-center py-12 px-6">
         <div class="max-w-7xl mx-auto w-full">
-            <div class="reveal interactive-card bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-gray-100">
-                <div class="flex flex-col md:flex-row min-h-[65vh]">
-                    <div class="bg-blue-600 md:w-5/12 p-12 lg:p-16 flex flex-col justify-center items-start text-white relative overflow-hidden z-10 shadow-[5px_0_15px_rgba(0,0,0,0.1)]">
+            <div class="reveal interactive-card bg-white rounded-[2.5rem] shadow-xl border border-gray-100">
+                <div class="flex flex-col md:flex-row md:min-h-[600px] h-full">
+                    <div class="bg-blue-600 md:w-5/12 min-h-[200px] p-10 lg:p-16 flex flex-col justify-center items-start text-white relative overflow-hidden z-10 shadow-[5px_0_15px_rgba(0,0,0,0.1)] rounded-t-[2.5rem] md:rounded-tr-none md:rounded-l-[2.5rem]">
                         <div class="giant-number">01</div>
                         <span class="text-7xl lg:text-8xl mb-6 relative z-10">📚</span>
                         <h2 class="text-4xl lg:text-5xl font-bold mb-4 leading-tight relative z-10">TLP<br>Development</h2>
@@ -119,22 +198,22 @@
                         </div>
                     </div>
                     
-                    <div class="md:w-7/12 relative">
-                        <div class="flip-container h-full" id="flip1">
+                    <div class="md:w-7/12 relative flex flex-col">
+                        <div class="flip-container" id="flip1">
                             <div class="flip-card">
                                 <!-- FRONT: Pain Point -> Demo -->
-                                <div class="flip-face flip-front p-10 lg:p-14 flex flex-col justify-center">
+                                <div class="flip-face flip-front justify-center">
                                     <!-- Top: The Challenge -->
                                     <div class="mb-8">
                                         <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">The Challenges</h4>
                                         <ul class="pain-list text-base md:text-lg">
-                                            <li>Hard to visually train students' step-by-step pedagogical logic.</li>
-                                            <li>Standard tools often lead to "guessing" rather than active knowledge construction.</li>
+                                            <li>Standard worksheets often lead to "guessing" instead of step-by-step thinking.</li>
+                                            <li>Hard to guide students' reasoning processes without the teacher present.</li>
                                         </ul>
                                     </div>
                                     
                                     <!-- Bottom: The Demo -->
-                                    <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+                                    <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100 flex-grow mb-4">
                                         <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-2 text-blue-500">💡</span> Let's Experience It</h3>
                                         <div class="space-y-4 mb-6">
                                             <a href="https://vtc-lc-exercise.github.io/HLA2106-U21_Using-there-structure/" target="_blank" class="btn-hover flex items-center p-3 bg-white rounded-xl border border-gray-200 group">
@@ -152,28 +231,28 @@
                                                 </div>
                                             </a>
                                         </div>
-                                        <button onclick="document.getElementById('flip1').classList.toggle('flipped')" class="flex items-center px-5 py-2 bg-gray-900 text-white rounded-lg font-bold text-sm hover:bg-blue-600 transition-colors group">
+                                        <button onclick="document.getElementById('flip1').classList.toggle('flipped')" class="flex items-center px-5 py-2 bg-gray-900 text-white rounded-lg font-bold text-sm hover:bg-blue-600 transition-colors group w-fit">
                                             How did HTML elevate this? <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                         </button>
                                     </div>
                                 </div>
                                 
                                 <!-- BACK: The Elevation -->
-                                <div class="flip-face flip-back p-10 lg:p-14 flex flex-col justify-center">
-                                    <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm h-full flex flex-col justify-center">
+                                <div class="flip-face flip-back justify-center">
+                                    <div class="bg-white p-6 md:p-8 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-center relative min-h-[300px] h-full">
                                         <h4 class="text-sm font-bold text-blue-600 uppercase tracking-wider mb-6 border-b border-blue-50 pb-3">The Vibe Coding Elevation</h4>
-                                        <div class="flex flex-wrap gap-3 mb-8">
-                                            <span class="px-5 py-2 bg-blue-50 text-blue-800 text-sm rounded-full font-bold shadow-sm border border-blue-100">🎯 Digital Scaffolding</span>
-                                            <span class="px-5 py-2 bg-blue-50 text-blue-800 text-sm rounded-full font-bold shadow-sm border border-blue-100">🧠 Active Construction</span>
+                                        <div class="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8">
+                                            <span class="px-4 py-2 bg-blue-50 text-blue-800 text-xs md:text-sm rounded-full font-bold shadow-sm border border-blue-100">🎯 Digital Scaffolding</span>
+                                            <span class="px-4 py-2 bg-blue-50 text-blue-800 text-xs md:text-sm rounded-full font-bold shadow-sm border border-blue-100">🧠 Active Construction</span>
                                         </div>
-                                        <ul class="point-list text-gray-700 text-lg md:text-xl font-medium leading-relaxed">
+                                        <ul class="point-list text-gray-700 text-base md:text-xl font-medium leading-relaxed">
                                             <li class="mb-4">Embedding <strong class="text-blue-700">pedagogical logic</strong> directly into the UI, forcing students to follow the thought process.</li>
-                                            <li>Guiding students with the exact same logic <strong class="text-blue-700">inside and outside class</strong>.</li>
+                                            <li>Guiding students with targeted feedback <strong class="text-blue-700">both inside and outside class</strong>.</li>
                                         </ul>
+                                        <button onclick="document.getElementById('flip1').classList.toggle('flipped')" class="absolute top-4 right-4 md:top-6 md:right-6 text-gray-400 hover:text-blue-600 p-2 rounded-full hover:bg-blue-50 transition-colors">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                                        </button>
                                     </div>
-                                    <button onclick="document.getElementById('flip1').classList.toggle('flipped')" class="absolute top-6 right-6 text-gray-400 hover:text-blue-600 p-2 rounded-full hover:bg-blue-50 transition-colors">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -190,9 +269,9 @@
     <!-- 🌟 AREA 2: Teaching in Classroom 🌟 -->
     <section id="area2" class="snap-section min-h-[100dvh] flex flex-col justify-center py-12 px-6">
         <div class="max-w-7xl mx-auto w-full">
-            <div class="reveal interactive-card bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-gray-100">
-                <div class="flex flex-col md:flex-row-reverse min-h-[65vh]">
-                    <div class="bg-pink-600 md:w-5/12 p-12 lg:p-16 flex flex-col justify-center items-start text-white relative overflow-hidden z-10 shadow-[-5px_0_15px_rgba(0,0,0,0.1)]">
+            <div class="reveal interactive-card bg-white rounded-[2.5rem] shadow-xl border border-gray-100">
+                <div class="flex flex-col md:flex-row-reverse md:min-h-[600px] h-full">
+                    <div class="bg-pink-600 md:w-5/12 min-h-[200px] p-10 lg:p-16 flex flex-col justify-center items-start text-white relative overflow-hidden z-10 shadow-[-5px_0_15px_rgba(0,0,0,0.1)] rounded-t-[2.5rem] md:rounded-tl-none md:rounded-r-[2.5rem]">
                         <div class="giant-number">02</div>
                         <span class="text-7xl lg:text-8xl mb-6 relative z-10">📱</span>
                         <h2 class="text-4xl lg:text-5xl font-bold mb-4 leading-tight relative z-10">Teaching in<br>Classroom</h2>
@@ -201,167 +280,24 @@
                         </div>
                     </div>
                     
-                    <div class="md:w-7/12 relative">
-                        <div class="flip-container h-full" id="flip2">
+                    <div class="md:w-7/12 relative flex flex-col">
+                        <div class="flip-container" id="flip2">
                             <div class="flip-card">
                                 <!-- FRONT: Pain Point -> Demo -->
-                                <div class="flip-face flip-front p-10 lg:p-14 flex flex-col justify-center" style="border-radius: 2.5rem 0 0 2.5rem;">
+                                <div class="flip-face flip-front justify-center" style="border-radius: 2.5rem 0 0 2.5rem;">
+                                    <style>
+                                        @media (max-width: 768px) {
+                                            #flip2 .flip-front, #flip2 .flip-back { border-radius: 0 0 2.5rem 2.5rem !important; }
+                                        }
+                                    </style>
                                     <div class="mb-8">
                                         <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">The Challenges</h4>
                                         <ul class="pain-list text-base md:text-lg">
                                             <li>Fear of making mistakes in front of peers raises the <strong>Affective Filter</strong>.</li>
-                                            <li>Tech barriers (Recording + PPT) act as a deterrent to practice.</li>
+                                            <li>Tech barriers act as a deterrent to speaking practice.</li>
                                             <li>Rote memorisation fails to build phrasal-level memory.</li>
                                         </ul>
                                     </div>
                                     
-                                    <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
-                                        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-2 text-pink-500">💡</span> Let's Experience It</h3>
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                                            <a href="https://vtc-lc-exercise.github.io/VE3A_IA_SpeakUP/" target="_blank" class="btn-hover flex flex-col p-5 bg-white rounded-xl border border-gray-200 group text-center items-center justify-center">
-                                                <span class="text-3xl mb-2 group-hover:scale-110 transition-transform">🗣️</span>
-                                                <h4 class="font-bold text-gray-900 group-hover:text-pink-600">SpeakUP</h4>
-                                                <p class="text-[10px] text-pink-500 mt-1 uppercase tracking-widest font-bold">STT Practice</p>
-                                            </a>
-                                            <a href="https://vtc-lc-exercise.github.io/AY2526-2D_Vocab-flashcard-IA/" target="_blank" class="btn-hover flex flex-col p-5 bg-white rounded-xl border border-gray-200 group text-center items-center justify-center">
-                                                <span class="text-3xl mb-2 group-hover:scale-110 transition-transform">🃏</span>
-                                                <h4 class="font-bold text-gray-900 group-hover:text-purple-600">Vocab Hub</h4>
-                                                <p class="text-[10px] text-purple-500 mt-1 uppercase tracking-widest font-bold">Gamified Phrasal</p>
-                                            </a>
-                                        </div>
-                                        <button onclick="document.getElementById('flip2').classList.toggle('flipped')" class="flex items-center px-5 py-2 bg-gray-900 text-white rounded-lg font-bold text-sm hover:bg-pink-600 transition-colors group">
-                                            How did HTML elevate this? <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <!-- BACK: The Elevation -->
-                                <div class="flip-face flip-back p-10 lg:p-14 flex flex-col justify-center" style="border-radius: 2.5rem 0 0 2.5rem;">
-                                    <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm h-full flex flex-col justify-center">
-                                        <h4 class="text-sm font-bold text-pink-600 uppercase tracking-wider mb-6 border-b border-pink-50 pb-3">The Vibe Coding Elevation</h4>
-                                        <div class="flex flex-wrap gap-3 mb-8">
-                                            <span class="px-5 py-2 bg-pink-50 text-pink-800 text-sm rounded-full font-bold shadow-sm border border-pink-100">🛡️ Lower Affective Filter</span>
-                                            <span class="px-5 py-2 bg-purple-50 text-purple-800 text-sm rounded-full font-bold shadow-sm border border-purple-100">🔄 Adaptive Learning</span>
-                                            <span class="px-5 py-2 bg-pink-50 text-pink-800 text-sm rounded-full font-bold shadow-sm border border-pink-100">🎮 Gamification</span>
-                                        </div>
-                                        <ul class="point-list text-gray-700 text-lg md:text-xl font-medium leading-relaxed">
-                                            <li class="mb-4"><strong class="text-pink-600">SpeakUP:</strong> Zero-tech-barrier private practice (TTS + STT) that lowers anxiety.</li>
-                                            <li><strong class="text-purple-600">Vocab Hub:</strong> Gamified "brainwashing" to build intuitive phrasal-level memory.</li>
-                                        </ul>
-                                    </div>
-                                    <button onclick="document.getElementById('flip2').classList.toggle('flipped')" class="absolute top-6 left-6 text-gray-400 hover:text-pink-600 p-2 rounded-full hover:bg-pink-50 transition-colors">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex justify-center mt-8">
-                <a href="#area3" class="text-gray-300 hover:text-teal-500 transition-colors p-4"><svg class="w-12 h-12 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg></a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 🌟 AREA 3: LLS Activities 🌟 -->
-    <section id="area3" class="snap-section min-h-[100dvh] flex flex-col justify-center pt-12 pb-4 px-6 relative">
-        <div class="max-w-7xl mx-auto w-full flex-grow flex flex-col justify-center">
-            <div class="reveal interactive-card bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-gray-100">
-                <div class="flex flex-col md:flex-row min-h-[65vh]">
-                    <div class="bg-teal-600 md:w-5/12 p-12 lg:p-16 flex flex-col justify-center items-start text-white relative overflow-hidden z-10 shadow-[5px_0_15px_rgba(0,0,0,0.1)]">
-                        <div class="giant-number">03</div>
-                        <span class="text-7xl lg:text-8xl mb-6 relative z-10">🌍</span>
-                        <h2 class="text-4xl lg:text-5xl font-bold mb-4 leading-tight relative z-10">LLS Activities<br><span class="text-3xl font-light text-teal-200">(Outside Class)</span></h2>
-                        <div class="inline-block px-4 py-1 bg-white/20 rounded-full backdrop-blur-sm border border-white/30 relative z-10 mt-2">
-                            <p class="text-teal-50 font-semibold text-lg lg:text-xl tracking-wide">As an LLS Supervisor...</p>
-                        </div>
-                    </div>
-                    
-                    <div class="md:w-7/12 relative">
-                        <div class="flip-container h-full" id="flip3">
-                            <div class="flip-card">
-                                <!-- FRONT: Pain Point -> Demo -->
-                                <div class="flip-face flip-front p-10 lg:p-14 flex flex-col justify-center">
-                                    <div class="mb-8">
-                                        <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">The Challenges</h4>
-                                        <ul class="pain-list text-base md:text-lg">
-                                            <li>Post-activity posters are passive and easily ignored.</li>
-                                            <li>"Scan or lose": If students don't take a photo, they leave with nothing.</li>
-                                        </ul>
-                                    </div>
-                                    
-                                    <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
-                                        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center"><span class="mr-2 text-teal-500">💡</span> Let's Experience It</h3>
-                                        <a href="https://vtc-lc-exercise.github.io/yckc-lc-llst-fashion-description/" target="_blank" class="btn-hover flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200 group mb-4">
-                                            <div class="flex items-center">
-                                                <div class="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center mr-4 group-hover:scale-110 transition-transform"><span class="text-xl">👗</span></div>
-                                                <div>
-                                                    <h4 class="font-bold text-gray-900 group-hover:text-teal-700 transition-colors">LC × Fashion: Cupid's Tee</h4>
-                                                    <p class="text-xs text-gray-500">Cross-disciplinary Platform</p>
-                                                </div>
-                                            </div>
-                                            <span class="text-teal-500 font-bold text-lg group-hover:text-teal-700 transition-colors">▶</span>
-                                        </a>
-                                        <div class="grid grid-cols-2 gap-4 mb-6">
-                                            <a href="https://vtc-lc-exercise.github.io/openday-pitchplease/" target="_blank" class="btn-hover p-3 bg-white rounded-xl border border-gray-200 group flex items-center">
-                                                <span class="text-lg mr-2">🎉</span>
-                                                <h4 class="font-bold text-gray-800 text-xs group-hover:text-teal-600">Pitch Please</h4>
-                                            </a>
-                                            <a href="https://vtc-lc-exercise.github.io/AY2526-LLSC-Car-tography/" target="_blank" class="btn-hover p-3 bg-white rounded-xl border border-gray-200 group flex items-center">
-                                                <span class="text-lg mr-2">🚗</span>
-                                                <h4 class="font-bold text-gray-800 text-xs group-hover:text-teal-600">Car-tography</h4>
-                                            </a>
-                                        </div>
-                                        <button onclick="document.getElementById('flip3').classList.toggle('flipped')" class="flex items-center px-5 py-2 bg-gray-900 text-white rounded-lg font-bold text-sm hover:bg-teal-600 transition-colors group">
-                                            How did HTML elevate this? <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <!-- BACK: The Elevation -->
-                                <div class="flip-face flip-back p-10 lg:p-14 flex flex-col justify-center">
-                                    <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm h-full flex flex-col justify-center">
-                                        <h4 class="text-sm font-bold text-teal-600 uppercase tracking-wider mb-6 border-b border-teal-50 pb-3">The Vibe Coding Elevation</h4>
-                                        <div class="flex flex-wrap gap-3 mb-8">
-                                            <span class="px-5 py-2 bg-teal-50 text-teal-800 text-sm rounded-full font-bold shadow-sm border border-teal-100">🌍 Digital Take-away</span>
-                                            <span class="px-5 py-2 bg-teal-50 text-teal-800 text-sm rounded-full font-bold shadow-sm border border-teal-100">🤝 CLIL Integration</span>
-                                        </div>
-                                        <ul class="point-list text-gray-700 text-lg md:text-xl font-medium leading-relaxed">
-                                            <li class="mb-4">Transforming posters into <strong class="text-teal-600">persistent Digital Assets</strong> featuring bilingual audio content.</li>
-                                            <li>Facilitating true cross-disciplinary learning (<strong class="text-teal-600">CLIL</strong>).</li>
-                                        </ul>
-                                    </div>
-                                    <button onclick="document.getElementById('flip3').classList.toggle('flipped')" class="absolute top-6 right-6 text-gray-400 hover:text-teal-600 p-2 rounded-full hover:bg-teal-50 transition-colors">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <footer class="text-center py-6 text-gray-400 text-sm lg:text-base font-medium w-full">
-            <p>✨ Elevated via Vibe Coding for VTC Languages Discipline ✨</p>
-        </footer>
-    </section>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const reveals = document.querySelectorAll('.reveal');
-            const revealOnScroll = () => {
-                const windowHeight = window.innerHeight;
-                reveals.forEach((reveal) => {
-                    const elementTop = reveal.getBoundingClientRect().top;
-                    if (elementTop < windowHeight - 50) reveal.classList.add('active');
-                });
-            };
-            window.addEventListener('scroll', revealOnScroll);
-            revealOnScroll();
-        });
-    </script>
-</body>
-</html>
+                                    <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100 flex-grow mb-4">
+                                        <h3 class="text-xl font-bold 

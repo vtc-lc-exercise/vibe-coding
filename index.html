@@ -34,47 +34,68 @@
         }
         @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 
+        /* ✨ Smooth Background Floating Animation */
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+        .floating-element {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatUp linear infinite;
+        }
+
         /* ✨ Smoother Reveal Animations */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* 🎭 Enhanced Card Hover Effects */
         .interactive-card { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(255,255,255,0.8); }
-        .interactive-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.08); }
+        .interactive-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.12); }
 
         /* 🔘 Refined Buttons */
         .btn-hover { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
         .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,0,0,0.05); }
         .btn-hover:active { transform: scale(0.97); }
 
-        /* 📝 Typographic Polish */
+        /* 📝 BIGGER Typographic Polish for Desktop */
         .pain-list { list-style: none; padding: 0; margin: 0; }
-        .pain-list li { position: relative; padding-left: 2.2rem; margin-bottom: 1rem; color: #475569; font-size: 1.05rem; line-height: 1.6; font-weight: 400;}
-        .pain-list li::before { content: '⚠️'; position: absolute; left: 0; top: 0.1rem; font-size: 1.1rem; opacity: 0.8;}
+        .pain-list li { position: relative; padding-left: 2.5rem; margin-bottom: 1.2rem; color: #475569; font-size: 1.15rem; line-height: 1.6; font-weight: 500;}
+        .pain-list li::before { content: '⚠️'; position: absolute; left: 0; top: 0.1rem; font-size: 1.3rem; opacity: 0.8;}
 
         .point-list { list-style: none; padding: 0; margin: 0; }
-        .point-list li { position: relative; padding-left: 2.2rem; margin-bottom: 1.2rem; line-height: 1.6; font-weight: 500; color: #334155;}
-        .point-list li::before { content: '✨'; position: absolute; left: 0; top: 0.1rem; font-size: 1.2rem; }
+        .point-list li { position: relative; padding-left: 2.5rem; margin-bottom: 1.5rem; line-height: 1.6; font-weight: 500; color: #334155; font-size: 1.25rem;}
+        .point-list li::before { content: '✨'; position: absolute; left: 0; top: 0.1rem; font-size: 1.5rem; }
+
+        @media (min-width: 1024px) {
+            .pain-list li { font-size: 1.35rem; margin-bottom: 1.5rem; }
+            .pain-list li::before { font-size: 1.5rem; }
+            .point-list li { font-size: 1.6rem; margin-bottom: 2rem; line-height: 1.7; }
+            .point-list li::before { font-size: 1.8rem; }
+        }
 
         /* 🔢 Watermark Numbers */
         .giant-number {
-            font-size: 12rem; line-height: 0.8; font-weight: 800;
+            font-size: 14rem; line-height: 0.8; font-weight: 800;
             background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             position: absolute; top: -10px; right: 10px; pointer-events: none;
         }
 
-        /* 🔄 Flip Card Logic (Kept Mobile-Safe) */
-        .flip-container { perspective: 1200px; width: 100%; display: flex; flex-direction: column; flex: 1; }
-        .flip-card { width: 100%; position: relative; transition: transform 0.9s cubic-bezier(0.68, -0.55, 0.265, 1.55); transform-style: preserve-3d; flex: 1; display: flex; }
-        .flip-container.flipped .flip-card { transform: rotateY(180deg); }
+        /* 🔄 Flip Card Logic */
+        .flip-container { perspective: 2000px; width: 100%; display: flex; flex-direction: column; flex: 1; }
+        .flip-card { width: 100%; position: relative; transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-style: preserve-3d; -webkit-transform-style: preserve-3d; flex: 1; display: flex; will-change: transform; box-shadow: 0 0 1px rgba(0,0,0,0); }
+        .flip-container.flipped .flip-card { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); }
 
-        .flip-face { width: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; padding: 3rem; }
+        .flip-face { width: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; padding: 4rem 3.5rem; }
 
-        .flip-front { background-color: #ffffff; border-radius: 0 2.5rem 2.5rem 0; z-index: 2; }
+        .flip-front { background-color: #ffffff; border-radius: 0 2.5rem 2.5rem 0; z-index: 2; transform: rotateY(0deg); -webkit-transform: rotateY(0deg); }
         .flip-back { 
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); 
-            transform: rotateY(180deg); border-radius: 0 2.5rem 2.5rem 0;
+            transform: rotateY(180deg); -webkit-transform: rotateY(180deg); border-radius: 0 2.5rem 2.5rem 0;
             position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             box-shadow: inset 0 0 40px rgba(0,0,0,0.02);
         }
@@ -84,335 +105,344 @@
             .flip-front, .flip-back { border-radius: 0 0 2.5rem 2.5rem;}
         }
 
-        @media not all and (min-resolution:.001dpcm) { 
-            @supports (-webkit-appearance:none) { 
-                .flip-face { backface-visibility: visible; } 
-                .flip-container.flipped .flip-front { display: none; } 
-                .flip-container:not(.flipped) .flip-back { display: none; } 
-            } 
-        }
+/* Removed hacky display:none to restore ultra-smooth 3D animation on Safari/iOS */
 
         /* 🌟 Tag Styling */
         .glass-tag {
-            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.9); box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
         body { scroll-snap-type: y proximity; overflow-x: hidden; }
         .snap-section { scroll-snap-align: start; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased selection:bg-blue-500 selection:text-white">
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-500 selection:text-white relative">
 
-    <!-- 🌟 HERO SECTION 🌟 -->
-    <header class="snap-section min-h-[100dvh] flex flex-col justify-between items-center text-center px-6 py-8 bg-sky-gradient relative overflow-hidden">
-        <!-- Floating Orbs -->
-        <div class="absolute top-[10%] right-[10%] w-[500px] h-[500px] bg-indigo-300/20 rounded-full mix-blend-multiply filter blur-[80px] animate-pulse" style="animation-duration: 8s;"></div>
-        <div class="absolute bottom-[10%] left-[10%] w-[600px] h-[600px] bg-sky-300/20 rounded-full mix-blend-multiply filter blur-[100px] animate-pulse" style="animation-duration: 12s; animation-delay: 2s;"></div>
-        <div class="absolute top-[40%] left-[40%] w-[300px] h-[300px] bg-purple-200/20 rounded-full mix-blend-multiply filter blur-[60px] animate-pulse" style="animation-duration: 10s; animation-delay: 4s;"></div>
+    <!-- ✨ GLOBAL FLOATING BACKGROUND ANIMATIONS ✨ -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <!-- Glowing Orbs -->
+        <div class="floating-element bg-blue-400/20 backdrop-blur-3xl w-48 h-48 rounded-full mix-blend-multiply filter blur-[40px]" style="left: 5%; animation-duration: 25s; animation-delay: 0s;"></div>
+        <div class="floating-element bg-purple-400/20 backdrop-blur-3xl w-64 h-64 rounded-full mix-blend-multiply filter blur-[50px]" style="left: 75%; animation-duration: 32s; animation-delay: 5s;"></div>
+        <div class="floating-element bg-teal-400/20 backdrop-blur-3xl w-40 h-40 rounded-full mix-blend-multiply filter blur-[30px]" style="left: 35%; animation-duration: 28s; animation-delay: 12s;"></div>
+        <div class="floating-element bg-pink-400/20 backdrop-blur-3xl w-56 h-56 rounded-full mix-blend-multiply filter blur-[45px]" style="left: 85%; animation-duration: 35s; animation-delay: 2s;"></div>
 
-        <div class="h-2"></div>
+        <!-- Little Sparkles & Emojis -->
+        <div class="floating-element text-3xl opacity-30" style="left: 15%; animation-duration: 20s; animation-delay: 4s;">✨</div>
+        <div class="floating-element text-4xl opacity-20" style="left: 50%; animation-duration: 24s; animation-delay: 8s;">💻</div>
+        <div class="floating-element text-2xl opacity-30" style="left: 80%; animation-duration: 18s; animation-delay: 15s;">💡</div>
+        <div class="floating-element text-3xl opacity-20" style="left: 25%; animation-duration: 22s; animation-delay: 10s;">🚀</div>
+        <div class="floating-element text-2xl opacity-30" style="left: 65%; animation-duration: 26s; animation-delay: 3s;">✨</div>
+    </div>
 
-        <div class="reveal active flex flex-col items-center justify-center space-y-8 max-w-6xl w-full relative z-10">
-            <div class="space-y-3">
-                <p class="text-sm md:text-lg font-bold tracking-[0.2em] uppercase text-slate-500">🏢 Languages Discipline</p>
-                <div class="glass-tag px-5 py-1.5 rounded-full inline-flex items-center">
-                    <span class="w-2 h-2 rounded-full bg-blue-500 mr-2 animate-pulse"></span>
-                    <p class="text-xs md:text-sm tracking-widest uppercase text-slate-700 font-bold">Centre Heads' Meeting • Professional Sharing</p>
-                </div>
-            </div>
+    <!-- MAIN CONTENT (z-10 to stay above floating background) -->
+    <main class="relative z-10">
 
-            <div class="space-y-6 pt-4">
-                <div class="inline-block p-5 glass-tag rounded-3xl shadow-lg mb-2 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
-                    <span class="text-5xl md:text-6xl">🚀</span>
-                </div>
-                <h1 class="text-5xl md:text-7xl lg:text-[5.5rem] font-extrabold leading-[1.1] tracking-tight text-slate-900 drop-shadow-sm">
-                    Elevating <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Personalised</span><br class="hidden md:block"> Language Learning
-                </h1>
-                <h2 class="text-2xl md:text-4xl font-medium text-slate-600 italic mt-4 flex items-center justify-center gap-3">
-                    <span class="h-px w-12 bg-slate-300"></span>
-                    via Vibe Coding 💻✨
-                    <span class="h-px w-12 bg-slate-300"></span>
-                </h2>
-            </div>
+        <!-- 🌟 HERO SECTION 🌟 -->
+        <header class="snap-section min-h-[100dvh] flex flex-col justify-between items-center text-center px-6 py-8 bg-sky-gradient relative overflow-hidden">
+            <div class="h-2"></div>
 
-            <div class="flex flex-wrap justify-center gap-3 pt-8 opacity-95">
-                <span class="px-6 py-2.5 glass-tag rounded-full text-sm font-bold text-slate-700 hover:bg-white hover:text-blue-600 transition-colors cursor-default">✨ Digital Scaffolding</span>
-                <span class="px-6 py-2.5 glass-tag rounded-full text-sm font-bold text-slate-700 hover:bg-white hover:text-blue-600 transition-colors cursor-default">🎙️ TTS & STT</span>
-                <span class="px-6 py-2.5 glass-tag rounded-full text-sm font-bold text-slate-700 hover:bg-white hover:text-blue-600 transition-colors cursor-default">⚡ Immediate Feedback</span>
-                <span class="px-6 py-2.5 glass-tag rounded-full text-sm font-bold text-slate-700 hover:bg-white hover:text-blue-600 transition-colors cursor-default">🎮 Gamification</span>
-            </div>
-
-            <div class="pt-12">
-                <p class="text-xs md:text-sm text-slate-400 font-bold tracking-[0.2em] uppercase mb-2">Presented by</p>
-                <div class="text-lg md:text-2xl font-bold text-slate-800">
-                    <p>Edwin CHAN <span class="mx-2 text-slate-300">|</span> <span class="font-medium text-blue-600">L(LC)/YC(KC)</span></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="pb-8 z-20">
-            <a href="#area1" class="flex flex-col items-center group">
-                <span class="text-xs uppercase tracking-[0.2em] mb-4 text-slate-500 font-bold group-hover:text-blue-600 transition-colors">Start Journey</span>
-                <div class="animate-bounce glass-tag p-4 rounded-full text-slate-600 group-hover:text-blue-600 transition-all">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
-                </div>
-            </a>
-        </div>
-    </header>
-
-    <!-- 🌟 AREA 1: TLP Development 🌟 -->
-    <section id="area1" class="snap-section min-h-[100dvh] flex flex-col justify-center py-16 px-6">
-        <div class="max-w-7xl mx-auto w-full">
-            <div class="reveal interactive-card bg-white rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-                <div class="flex flex-col md:flex-row md:min-h-[600px] h-full">
-                    <!-- Left Color Block -->
-                    <div class="bg-gradient-to-br from-blue-500 to-indigo-600 md:w-5/12 min-h-[220px] p-10 lg:p-16 flex flex-col justify-center items-start text-white relative overflow-hidden z-10 rounded-t-[2.5rem] md:rounded-tr-none md:rounded-l-[2.5rem]">
-                        <div class="giant-number">01</div>
-                        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E')]"></div>
-                        <span class="text-7xl lg:text-8xl mb-6 relative z-10 filter drop-shadow-md">📚</span>
-                        <h2 class="text-4xl lg:text-5xl font-extrabold mb-4 leading-tight relative z-10 tracking-tight">TLP<br>Development</h2>
-                        <div class="inline-block px-5 py-2 bg-white/10 rounded-full backdrop-blur-md border border-white/20 relative z-10 mt-2">
-                            <p class="text-blue-50 font-semibold text-lg lg:text-xl tracking-wide">As a TLP Writer...</p>
-                        </div>
+            <div class="reveal active flex flex-col items-center justify-center space-y-8 max-w-6xl w-full relative z-10">
+                <div class="space-y-3">
+                    <p class="text-base md:text-xl lg:text-2xl font-bold tracking-[0.2em] uppercase text-slate-500">🏢 Languages Discipline</p>
+                    <div class="glass-tag px-6 py-2 rounded-full inline-flex items-center">
+                        <span class="w-3 h-3 rounded-full bg-blue-500 mr-3 animate-pulse"></span>
+                        <p class="text-sm md:text-base lg:text-lg tracking-widest uppercase text-slate-700 font-bold">Centre Heads' Meeting • Professional Sharing</p>
                     </div>
+                </div>
 
-                    <div class="md:w-7/12 relative flex flex-col bg-white rounded-b-[2.5rem] md:rounded-bl-none md:rounded-r-[2.5rem]">
-                        <div class="flip-container" id="flip1">
-                            <div class="flip-card">
-                                <!-- FRONT -->
-                                <div class="flip-face flip-front justify-center">
-                                    <div class="mb-10">
-                                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-[0.15em] mb-5 flex items-center gap-3">
-                                            The Challenges <span class="h-px flex-1 bg-slate-100"></span>
-                                        </h4>
-                                        <ul class="pain-list">
-                                            <li>Standard worksheets often lead to "guessing" instead of step-by-step thinking.</li>
-                                            <li>Hard to guide students' reasoning processes without the teacher present.</li>
-                                        </ul>
-                                    </div>
+                <div class="space-y-6 pt-6">
+                    <div class="inline-block p-6 glass-tag rounded-3xl shadow-lg mb-2 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+                        <span class="text-6xl md:text-7xl lg:text-8xl">🚀</span>
+                    </div>
+                    <h1 class="text-5xl md:text-7xl lg:text-[6.5rem] font-extrabold leading-[1.1] tracking-tight text-slate-900 drop-shadow-sm">
+                        Elevating <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Personalised</span><br class="hidden md:block"> Language Learning
+                    </h1>
+                    <h2 class="text-2xl md:text-4xl lg:text-5xl font-medium text-slate-600 italic mt-6 flex items-center justify-center gap-4">
+                        <span class="h-px w-16 bg-slate-300"></span>
+                        via Vibe Coding 💻✨
+                        <span class="h-px w-16 bg-slate-300"></span>
+                    </h2>
+                </div>
 
-                                    <div class="bg-slate-50/80 p-7 rounded-3xl border border-slate-100/80 flex-grow mb-4">
-                                        <h3 class="text-lg font-bold text-slate-800 mb-5 flex items-center"><span class="mr-3 text-blue-500 text-2xl">💡</span> Let's Experience It</h3>
-                                        <div class="space-y-3 mb-8">
-                                            <a href="https://vtc-lc-exercise.github.io/HLA2106-U21_Using-there-structure/" target="_blank" class="btn-hover flex items-center p-4 bg-white rounded-2xl border border-slate-200 group">
-                                                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mr-5 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 shadow-sm">▶</div>
-                                                <div>
-                                                    <h4 class="font-bold text-slate-800 group-hover:text-blue-700 transition-colors text-lg">There Structure</h4>
-                                                    <p class="text-sm text-slate-500 mt-0.5">Step-by-step Logic Training</p>
-                                                </div>
-                                            </a>
-                                            <a href="https://vtc-lc-exercise.github.io/HLA2106-U21_Using-Gerunds/" target="_blank" class="btn-hover flex items-center p-4 bg-white rounded-2xl border border-slate-200 group">
-                                                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mr-5 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 shadow-sm">▶</div>
-                                                <div>
-                                                    <h4 class="font-bold text-slate-800 group-hover:text-blue-700 transition-colors text-lg">Using Gerunds</h4>
-                                                    <p class="text-sm text-slate-500 mt-0.5">Interactive Summary Logic</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <button onclick="document.getElementById('flip1').classList.toggle('flipped')" class="flex items-center px-6 py-3 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-blue-600 transition-all duration-300 group w-fit shadow-md hover:shadow-lg">
-                                            How did HTML elevate this? <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                        </button>
-                                    </div>
-                                </div>
+                <div class="flex flex-wrap justify-center gap-4 pt-10 opacity-95">
+                    <span class="px-8 py-3 glass-tag rounded-full text-base lg:text-lg font-bold text-slate-700 hover:bg-white hover:text-blue-600 transition-colors cursor-default">✨ Digital Scaffolding</span>
+                    <span class="px-8 py-3 glass-tag rounded-full text-base lg:text-lg font-bold text-slate-700 hover:bg-white hover:text-blue-600 transition-colors cursor-default">🎙️ TTS & STT</span>
+                    <span class="px-8 py-3 glass-tag rounded-full text-base lg:text-lg font-bold text-slate-700 hover:bg-white hover:text-blue-600 transition-colors cursor-default">⚡ Immediate Feedback</span>
+                    <span class="px-8 py-3 glass-tag rounded-full text-base lg:text-lg font-bold text-slate-700 hover:bg-white hover:text-blue-600 transition-colors cursor-default">🎮 Gamification</span>
+                </div>
 
-                                <!-- BACK -->
-                                <div class="flip-face flip-back justify-center">
-                                    <div class="h-full flex flex-col justify-center relative">
-                                        <h4 class="text-xs font-bold text-blue-500 uppercase tracking-[0.15em] mb-6 flex items-center gap-3">
-                                            The Vibe Coding Elevation <span class="h-px flex-1 bg-blue-100"></span>
-                                        </h4>
-                                        <div class="flex flex-wrap gap-3 mb-10">
-                                            <span class="px-5 py-2 bg-white text-blue-700 text-sm rounded-full font-bold shadow-sm border border-blue-100 flex items-center gap-2"><span class="text-lg">🎯</span> Digital Scaffolding</span>
-                                            <span class="px-5 py-2 bg-white text-blue-700 text-sm rounded-full font-bold shadow-sm border border-blue-100 flex items-center gap-2"><span class="text-lg">🧠</span> Active Construction</span>
-                                        </div>
-                                        <ul class="point-list text-xl md:text-2xl font-medium leading-relaxed text-slate-700 space-y-6">
-                                            <li>Embedding <strong class="text-blue-600">pedagogical logic</strong> directly into the UI, forcing students to follow the thought process.</li>
-                                            <li>Guiding students with targeted feedback <strong class="text-blue-600">both inside and outside class</strong>.</li>
-                                        </ul>
-                                        <button onclick="document.getElementById('flip1').classList.toggle('flipped')" class="absolute top-0 right-0 text-slate-400 hover:text-blue-600 p-3 bg-white rounded-full shadow-sm hover:shadow-md transition-all">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                                        </button>
-                                    </div>
-                                </div>
+                <div class="pt-14">
+                    <p class="text-sm md:text-base text-slate-400 font-bold tracking-[0.2em] uppercase mb-3">Presented by</p>
+                    <div class="text-xl md:text-3xl lg:text-4xl font-bold text-slate-800">
+                        <p>Edwin CHAN <span class="mx-3 text-slate-300">|</span> <span class="font-medium text-blue-600">L(LC)/YC(KC)</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pb-8 z-20">
+                <a href="#area1" class="flex flex-col items-center group">
+                    <span class="text-sm uppercase tracking-[0.2em] mb-4 text-slate-500 font-bold group-hover:text-blue-600 transition-colors">Start Journey</span>
+                    <div class="animate-bounce glass-tag p-5 rounded-full text-slate-600 group-hover:text-blue-600 transition-all">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </a>
+            </div>
+        </header>
+
+        <!-- 🌟 AREA 1: TLP Development 🌟 -->
+        <section id="area1" class="snap-section min-h-[100dvh] flex flex-col justify-center py-16 px-6 relative z-10">
+            <div class="max-w-[90rem] mx-auto w-full">
+                <div class="reveal interactive-card bg-white/95 backdrop-blur-xl rounded-[3rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-white">
+                    <div class="flex flex-col md:flex-row md:min-h-[700px] h-full">
+                        <!-- Left Color Block -->
+                        <div class="bg-gradient-to-br from-blue-500 to-indigo-600 md:w-5/12 min-h-[250px] p-12 lg:p-20 flex flex-col justify-center items-start text-white relative overflow-hidden z-10 rounded-t-[3rem] md:rounded-tr-none md:rounded-l-[3rem]">
+                            <div class="giant-number">01</div>
+                            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E')]"></div>
+                            <span class="text-8xl lg:text-9xl mb-8 relative z-10 filter drop-shadow-lg">📚</span>
+                            <h2 class="text-5xl lg:text-7xl font-extrabold mb-6 leading-tight relative z-10 tracking-tight">TLP<br>Development</h2>
+                            <div class="inline-block px-6 py-3 bg-white/10 rounded-full backdrop-blur-md border border-white/20 relative z-10 mt-4">
+                                <p class="text-blue-50 font-semibold text-xl lg:text-2xl tracking-wide">As a TLP Writer...</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="flex justify-center mt-12">
-                <a href="#area2" class="text-slate-300 hover:text-pink-500 transition-colors p-4"><svg class="w-10 h-10 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 🌟 AREA 2: Teaching in Classroom 🌟 -->
-    <section id="area2" class="snap-section min-h-[100dvh] flex flex-col justify-center py-16 px-6">
-        <div class="max-w-7xl mx-auto w-full">
-            <div class="reveal interactive-card bg-white rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-                <div class="flex flex-col md:flex-row-reverse md:min-h-[600px] h-full">
-                    <div class="bg-gradient-to-br from-pink-500 to-rose-600 md:w-5/12 min-h-[220px] p-10 lg:p-16 flex flex-col justify-center items-start text-white relative overflow-hidden z-10 shadow-[-5px_0_15px_rgba(0,0,0,0.1)] rounded-t-[2.5rem] md:rounded-tl-none md:rounded-r-[2.5rem]">
-                        <div class="giant-number">02</div>
-                        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E')]"></div>
-                        <span class="text-7xl lg:text-8xl mb-6 relative z-10 filter drop-shadow-md">📱</span>
-                        <h2 class="text-4xl lg:text-5xl font-extrabold mb-4 leading-tight relative z-10 tracking-tight">Teaching in<br>Classroom</h2>
-                        <div class="inline-block px-5 py-2 bg-white/10 rounded-full backdrop-blur-md border border-white/20 relative z-10 mt-2">
-                            <p class="text-pink-50 font-semibold text-lg lg:text-xl tracking-wide">As a Frontline Teacher...</p>
-                        </div>
-                    </div>
-
-                    <div class="md:w-7/12 relative flex flex-col bg-white rounded-b-[2.5rem] md:rounded-br-none md:rounded-l-[2.5rem]">
-                        <div class="flip-container" id="flip2">
-                            <div class="flip-card">
-                                <!-- FRONT -->
-                                <div class="flip-face flip-front justify-center" style="border-radius: 2.5rem 0 0 2.5rem;">
-                                    <style>
-                                        @media (max-width: 768px) { #flip2 .flip-front, #flip2 .flip-back { border-radius: 0 0 2.5rem 2.5rem !important; } }
-                                    </style>
-                                    <div class="mb-10">
-                                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-[0.15em] mb-5 flex items-center gap-3">
-                                            The Challenges <span class="h-px flex-1 bg-slate-100"></span>
-                                        </h4>
-                                        <ul class="pain-list">
-                                            <li>Fear of making mistakes in front of peers raises the <strong>Affective Filter</strong>.</li>
-                                            <li>Tech barriers act as a deterrent to speaking practice.</li>
-                                            <li>Rote memorisation fails to build phrasal-level memory.</li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="bg-slate-50/80 p-7 rounded-3xl border border-slate-100/80 flex-grow mb-4">
-                                        <h3 class="text-lg font-bold text-slate-800 mb-5 flex items-center"><span class="mr-3 text-pink-500 text-2xl">💡</span> Let's Experience It</h3>
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                                            <a href="https://vtc-lc-exercise.github.io/VE3A_IA_SpeakUP/" target="_blank" class="btn-hover flex flex-col p-5 bg-white rounded-2xl border border-slate-200 group text-center items-center justify-center">
-                                                <span class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300 drop-shadow-sm">🗣️</span>
-                                                <h4 class="font-bold text-slate-800 group-hover:text-pink-600 text-lg">SpeakUP</h4>
-                                                <p class="text-xs text-pink-500/80 mt-1 font-bold uppercase tracking-widest">Workplace Presentation II</p>
-                                            </a>
-                                            <a href="https://vtc-lc-exercise.github.io/AY2526-2D_Vocab-flashcard-IA/" target="_blank" class="btn-hover flex flex-col p-5 bg-white rounded-2xl border border-slate-200 group text-center items-center justify-center">
-                                                <span class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300 drop-shadow-sm">🃏</span>
-                                                <h4 class="font-bold text-slate-800 group-hover:text-purple-600 text-lg">Vocab Hub</h4>
-                                                <p class="text-xs text-purple-500/80 mt-1 font-bold uppercase tracking-widest">Workplace Writing II</p>
-                                            </a>
+                        <div class="md:w-7/12 relative flex flex-col">
+                            <div class="flip-container" id="flip1">
+                                <div class="flip-card">
+                                    <!-- FRONT -->
+                                    <div class="flip-face flip-front justify-center">
+                                        <div class="mb-12">
+                                            <h4 class="text-sm lg:text-base font-bold text-slate-400 uppercase tracking-[0.15em] mb-6 flex items-center gap-4">
+                                                The Challenges <span class="h-px flex-1 bg-slate-100"></span>
+                                            </h4>
+                                            <ul class="pain-list">
+                                                <li>Standard worksheets often lead to "guessing" instead of step-by-step thinking.</li>
+                                                <li>Hard to guide students' reasoning processes without the teacher present.</li>
+                                            </ul>
                                         </div>
-                                        <button onclick="document.getElementById('flip2').classList.toggle('flipped')" class="flex items-center px-6 py-3 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-pink-600 transition-all duration-300 group w-fit shadow-md hover:shadow-lg">
-                                            How did HTML elevate this? <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                        </button>
-                                    </div>
-                                </div>
 
-                                <!-- BACK -->
-                                <div class="flip-face flip-back justify-center" style="border-radius: 2.5rem 0 0 2.5rem;">
-                                    <div class="h-full flex flex-col justify-center relative">
-                                        <h4 class="text-xs font-bold text-pink-500 uppercase tracking-[0.15em] mb-6 flex items-center gap-3">
-                                            The Vibe Coding Elevation <span class="h-px flex-1 bg-pink-100"></span>
-                                        </h4>
-                                        <div class="flex flex-wrap gap-3 mb-10">
-                                            <span class="px-5 py-2 bg-white text-pink-700 text-sm rounded-full font-bold shadow-sm border border-pink-100 flex items-center gap-2"><span class="text-lg">🛡️</span> Lower Affective Filter</span>
-                                            <span class="px-5 py-2 bg-white text-purple-700 text-sm rounded-full font-bold shadow-sm border border-purple-100 flex items-center gap-2"><span class="text-lg">🔄</span> Spaced Repetition</span>
-                                        </div>
-                                        <ul class="point-list text-xl md:text-2xl font-medium leading-relaxed text-slate-700 space-y-6">
-                                            <li><strong class="text-pink-600">SpeakUP:</strong> Zero-tech-barrier private practice (<strong class="text-pink-600">TTS & STT</strong>) that lowers anxiety.</li>
-                                            <li><strong class="text-purple-600">Vocab Hub:</strong> Uses <strong class="text-purple-600">Cookies</strong> to remember mistakes, enabling continuous replay of weak areas.</li>
-                                        </ul>
-                                        <button onclick="document.getElementById('flip2').classList.toggle('flipped')" class="absolute top-0 right-0 text-slate-400 hover:text-pink-600 p-3 bg-white rounded-full shadow-sm hover:shadow-md transition-all">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex justify-center mt-12">
-                <a href="#area3" class="text-slate-300 hover:text-teal-500 transition-colors p-4"><svg class="w-10 h-10 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 🌟 AREA 3: LLS Activities 🌟 -->
-    <section id="area3" class="snap-section min-h-[100dvh] flex flex-col justify-center pt-16 pb-8 px-6 relative">
-        <div class="max-w-7xl mx-auto w-full flex-grow flex flex-col justify-center">
-            <div class="reveal interactive-card bg-white rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
-                <div class="flex flex-col md:flex-row md:min-h-[600px] h-full">
-                    <div class="bg-gradient-to-br from-teal-500 to-emerald-600 md:w-5/12 min-h-[220px] p-10 lg:p-16 flex flex-col justify-center items-start text-white relative overflow-hidden z-10 shadow-[5px_0_15px_rgba(0,0,0,0.1)] rounded-t-[2.5rem] md:rounded-tr-none md:rounded-l-[2.5rem]">
-                        <div class="giant-number">03</div>
-                        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E')]"></div>
-                        <span class="text-7xl lg:text-8xl mb-6 relative z-10 filter drop-shadow-md">🌍</span>
-                        <h2 class="text-4xl lg:text-5xl font-extrabold mb-4 leading-tight relative z-10 tracking-tight">LLS Activities<br><span class="text-2xl lg:text-3xl font-medium text-teal-100 mt-2 block">(Outside Class)</span></h2>
-                        <div class="inline-block px-5 py-2 bg-white/10 rounded-full backdrop-blur-md border border-white/20 relative z-10 mt-3">
-                            <p class="text-teal-50 font-semibold text-lg lg:text-xl tracking-wide">As an LLS Supervisor...</p>
-                        </div>
-                    </div>
-
-                    <div class="md:w-7/12 relative flex flex-col bg-white rounded-b-[2.5rem] md:rounded-bl-none md:rounded-r-[2.5rem]">
-                        <div class="flip-container" id="flip3">
-                            <div class="flip-card">
-                                <!-- FRONT -->
-                                <div class="flip-face flip-front justify-center">
-                                    <div class="mb-10">
-                                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-[0.15em] mb-5 flex items-center gap-3">
-                                            The Challenges <span class="h-px flex-1 bg-slate-100"></span>
-                                        </h4>
-                                        <ul class="pain-list">
-                                            <li>"Scan or lose": Info boards are passive; students leave without tangible takeaways.</li>
-                                            <li>Hard to facilitate fruitful, interactive engagement during large-scale events.</li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="bg-slate-50/80 p-7 rounded-3xl border border-slate-100/80 flex-grow mb-4">
-                                        <h3 class="text-lg font-bold text-slate-800 mb-5 flex items-center"><span class="mr-3 text-teal-500 text-2xl">💡</span> Let's Experience It</h3>
-                                        <a href="https://vtc-lc-exercise.github.io/yckc-lc-llst-fashion-description/" target="_blank" class="btn-hover flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 group mb-4">
-                                            <div class="flex items-center">
-                                                <div class="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center mr-5 group-hover:scale-105 transition-transform duration-300 shadow-sm"><span class="text-2xl drop-shadow-sm">👗</span></div>
-                                                <div>
-                                                    <h4 class="font-bold text-slate-800 group-hover:text-teal-600 transition-colors text-lg">LC × Fashion: Cupid's Tee</h4>
-                                                    <p class="text-xs text-slate-500 font-bold uppercase tracking-wider mt-0.5">Cross-disciplinary Platform</p>
-                                                </div>
+                                        <div class="bg-slate-50/80 p-8 lg:p-10 rounded-[2rem] border border-slate-100 flex-grow mb-4 shadow-inner">
+                                            <h3 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-8 flex items-center"><span class="mr-4 text-blue-500 text-3xl lg:text-4xl">💡</span> Let's Experience It</h3>
+                                            <div class="space-y-4 mb-10">
+                                                <a href="https://vtc-lc-exercise.github.io/HLA2106-U21_Using-there-structure/" target="_blank" class="btn-hover flex items-center p-5 lg:p-6 bg-white rounded-2xl border border-slate-200 group">
+                                                    <div class="w-14 h-14 lg:w-16 lg:h-16 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl lg:text-3xl mr-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 shadow-sm">▶</div>
+                                                    <div>
+                                                        <h4 class="font-bold text-slate-800 group-hover:text-blue-700 transition-colors text-xl lg:text-2xl">There Structure</h4>
+                                                        <p class="text-base lg:text-lg text-slate-500 mt-1">Step-by-step Logic Training</p>
+                                                    </div>
+                                                </a>
+                                                <a href="https://vtc-lc-exercise.github.io/HLA2106-U21_Using-Gerunds/" target="_blank" class="btn-hover flex items-center p-5 lg:p-6 bg-white rounded-2xl border border-slate-200 group">
+                                                    <div class="w-14 h-14 lg:w-16 lg:h-16 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl lg:text-3xl mr-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 shadow-sm">▶</div>
+                                                    <div>
+                                                        <h4 class="font-bold text-slate-800 group-hover:text-blue-700 transition-colors text-xl lg:text-2xl">Using Gerunds</h4>
+                                                        <p class="text-base lg:text-lg text-slate-500 mt-1">Interactive Summary Logic</p>
+                                                    </div>
+                                                </a>
                                             </div>
-                                            <span class="text-teal-500 font-bold text-xl group-hover:translate-x-1 transition-transform mr-2">▶</span>
-                                        </a>
-                                        <div class="grid grid-cols-2 gap-4 mb-8">
-                                            <a href="https://vtc-lc-exercise.github.io/openday-pitchplease/" target="_blank" class="btn-hover p-4 bg-white rounded-2xl border border-slate-200 group flex items-center">
-                                                <span class="text-2xl mr-3 group-hover:scale-110 transition-transform duration-300 drop-shadow-sm">🎉</span>
-                                                <div>
-                                                    <h4 class="font-bold text-slate-800 text-sm group-hover:text-teal-600">Open Day:</h4>
-                                                    <p class="text-[11px] text-slate-500 font-bold uppercase tracking-wider mt-0.5">Pitch, please!</p>
-                                                </div>
-                                            </a>
-                                            <a href="https://vtc-lc-exercise.github.io/AY2526-LLSC-Car-tography/" target="_blank" class="btn-hover p-4 bg-white rounded-2xl border border-slate-200 group flex items-center">
-                                                <span class="text-2xl mr-3 group-hover:scale-110 transition-transform duration-300 drop-shadow-sm">🚗</span>
-                                                <div>
-                                                    <h4 class="font-bold text-slate-800 text-sm group-hover:text-teal-600">LC × Auto:</h4>
-                                                    <p class="text-[11px] text-slate-500 font-bold uppercase tracking-wider mt-0.5">Car-tography</p>
-                                                </div>
-                                            </a>
+                                            <button onclick="document.getElementById('flip1').classList.toggle('flipped')" class="flex items-center px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold text-lg lg:text-xl hover:bg-blue-600 transition-all duration-300 group w-fit shadow-lg hover:shadow-xl hover:-translate-y-1">
+                                                How did HTML elevate this? <svg class="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                            </button>
                                         </div>
-                                        <button onclick="document.getElementById('flip3').classList.toggle('flipped')" class="flex items-center px-6 py-3 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-teal-600 transition-all duration-300 group w-fit shadow-md hover:shadow-lg">
-                                            How did HTML elevate this? <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                        </button>
+                                    </div>
+
+                                    <!-- BACK -->
+                                    <div class="flip-face flip-back justify-center">
+                                        <div class="h-full flex flex-col justify-center relative">
+                                            <h4 class="text-sm lg:text-base font-bold text-blue-500 uppercase tracking-[0.15em] mb-8 flex items-center gap-4">
+                                                The Vibe Coding Elevation <span class="h-px flex-1 bg-blue-100"></span>
+                                            </h4>
+                                            <div class="flex flex-wrap gap-4 mb-12">
+                                                <span class="px-6 py-3 bg-white text-blue-700 text-base lg:text-lg rounded-full font-bold shadow-sm border border-blue-100 flex items-center gap-2"><span class="text-xl">🎯</span> Digital Scaffolding</span>
+                                                <span class="px-6 py-3 bg-white text-blue-700 text-base lg:text-lg rounded-full font-bold shadow-sm border border-blue-100 flex items-center gap-2"><span class="text-xl">🧠</span> Active Construction</span>
+                                            </div>
+                                            <ul class="point-list text-2xl lg:text-3xl font-medium leading-relaxed text-slate-700 space-y-8">
+                                                <li>Embedding <strong class="text-blue-600">pedagogical logic</strong> directly into the UI, forcing students to follow the thought process.</li>
+                                                <li>Guiding students with targeted feedback <strong class="text-blue-600">both inside and outside class</strong>.</li>
+                                            </ul>
+                                            <button onclick="document.getElementById('flip1').classList.toggle('flipped')" class="absolute top-0 right-0 text-slate-400 hover:text-blue-600 p-4 bg-white rounded-full shadow-md hover:shadow-lg hover:scale-110 transition-all">
+                                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                                <!-- BACK -->
-                                <div class="flip-face flip-back justify-center">
-                                    <div class="h-full flex flex-col justify-center relative">
-                                        <h4 class="text-xs font-bold text-teal-500 uppercase tracking-[0.15em] mb-6 flex items-center gap-3">
-                                            The Vibe Coding Elevation <span class="h-px flex-1 bg-teal-100"></span>
-                                        </h4>
-                                        <div class="flex flex-wrap gap-3 mb-10">
-                                            <span class="px-5 py-2 bg-white text-teal-700 text-sm rounded-full font-bold shadow-sm border border-teal-100 flex items-center gap-2"><span class="text-lg">🌍</span> Persistent Assets</span>
-                                            <span class="px-5 py-2 bg-white text-emerald-700 text-sm rounded-full font-bold shadow-sm border border-emerald-100 flex items-center gap-2"><span class="text-lg">🤝</span> CLIL Integration</span>
+                <div class="flex justify-center mt-12">
+                    <a href="#area2" class="text-slate-300 hover:text-pink-500 transition-colors p-4"><svg class="w-12 h-12 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🌟 AREA 2: Teaching in Classroom 🌟 -->
+        <section id="area2" class="snap-section min-h-[100dvh] flex flex-col justify-center py-16 px-6 relative z-10">
+            <div class="max-w-[90rem] mx-auto w-full">
+                <div class="reveal interactive-card bg-white/95 backdrop-blur-xl rounded-[3rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-white">
+                    <div class="flex flex-col md:flex-row-reverse md:min-h-[700px] h-full">
+                        <div class="bg-gradient-to-br from-pink-500 to-rose-600 md:w-5/12 min-h-[250px] p-12 lg:p-20 flex flex-col justify-center items-start text-white relative overflow-hidden z-10 shadow-[-5px_0_15px_rgba(0,0,0,0.1)] rounded-t-[3rem] md:rounded-tl-none md:rounded-r-[3rem]">
+                            <div class="giant-number">02</div>
+                            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E')]"></div>
+                            <span class="text-8xl lg:text-9xl mb-8 relative z-10 filter drop-shadow-lg">📱</span>
+                            <h2 class="text-5xl lg:text-7xl font-extrabold mb-6 leading-tight relative z-10 tracking-tight">Teaching in<br>Classroom</h2>
+                            <div class="inline-block px-6 py-3 bg-white/10 rounded-full backdrop-blur-md border border-white/20 relative z-10 mt-4">
+                                <p class="text-pink-50 font-semibold text-xl lg:text-2xl tracking-wide">As a Frontline Teacher...</p>
+                            </div>
+                        </div>
+
+                        <div class="md:w-7/12 relative flex flex-col">
+                            <div class="flip-container" id="flip2">
+                                <div class="flip-card">
+                                    <!-- FRONT -->
+                                    <div class="flip-face flip-front justify-center" style="border-radius: 3rem 0 0 3rem;">
+                                        <style>
+                                            @media (max-width: 768px) { #flip2 .flip-front, #flip2 .flip-back { border-radius: 0 0 3rem 3rem !important; } }
+                                        </style>
+                                        <div class="mb-12">
+                                            <h4 class="text-sm lg:text-base font-bold text-slate-400 uppercase tracking-[0.15em] mb-6 flex items-center gap-4">
+                                                The Challenges <span class="h-px flex-1 bg-slate-100"></span>
+                                            </h4>
+                                            <ul class="pain-list">
+                                                <li>Fear of making mistakes in front of peers raises the <strong>Affective Filter</strong>.</li>
+                                                <li>Tech barriers act as a deterrent to speaking practice.</li>
+                                                <li>Rote memorisation fails to build phrasal-level memory.</li>
+                                            </ul>
                                         </div>
-                                        <ul class="point-list text-xl md:text-2xl font-medium leading-relaxed text-slate-700 space-y-6">
-                                            <li>Transforming temporary info boards into <strong class="text-teal-600">Persistent Digital Assets</strong> for students to revisit anytime.</li>
-                                            <li>Facilitating <strong class="text-teal-600">fruitful engagement</strong> and true cross-disciplinary learning (CLIL).</li>
-                                        </ul>
-                                        <button onclick="document.getElementById('flip3').classList.toggle('flipped')" class="absolute top-0 right-0 text-slate-400 hover:text-teal-600 p-3 bg-white rounded-full shadow-sm hover:shadow-md transition-all">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                                        </button>
+
+                                        <div class="bg-slate-50/80 p-8 lg:p-10 rounded-[2rem] border border-slate-100 flex-grow mb-4 shadow-inner">
+                                            <h3 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-8 flex items-center"><span class="mr-4 text-pink-500 text-3xl lg:text-4xl">💡</span> Let's Experience It</h3>
+                                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+                                                <a href="https://vtc-lc-exercise.github.io/VE3A_IA_SpeakUP/" target="_blank" class="btn-hover flex flex-col p-6 lg:p-8 bg-white rounded-3xl border border-slate-200 group text-center items-center justify-center">
+                                                    <span class="text-5xl lg:text-6xl mb-4 group-hover:scale-110 transition-transform duration-300 drop-shadow-sm">🗣️</span>
+                                                    <h4 class="font-bold text-slate-800 group-hover:text-pink-600 text-xl lg:text-2xl">Speaking Skills</h4>
+                                                    <p class="text-sm lg:text-base text-pink-500/90 mt-2 font-bold uppercase tracking-[0.15em]">Workplace Presentation II</p>
+                                                </a>
+                                                <a href="https://vtc-lc-exercise.github.io/AY2526-2D_Vocab-flashcard-IA/" target="_blank" class="btn-hover flex flex-col p-6 lg:p-8 bg-white rounded-3xl border border-slate-200 group text-center items-center justify-center">
+                                                    <span class="text-5xl lg:text-6xl mb-4 group-hover:scale-110 transition-transform duration-300 drop-shadow-sm">🃏</span>
+                                                    <h4 class="font-bold text-slate-800 group-hover:text-purple-600 text-xl lg:text-2xl">Vocab Learning</h4>
+                                                    <p class="text-sm lg:text-base text-purple-500/90 mt-2 font-bold uppercase tracking-[0.15em]">Workplace Writing II</p>
+                                                </a>
+                                            </div>
+                                            <button onclick="document.getElementById('flip2').classList.toggle('flipped')" class="flex items-center px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold text-lg lg:text-xl hover:bg-pink-600 transition-all duration-300 group w-fit shadow-lg hover:shadow-xl hover:-translate-y-1">
+                                                How did HTML elevate this? <svg class="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- BACK -->
+                                    <div class="flip-face flip-back justify-center" style="border-radius: 3rem 0 0 3rem;">
+                                        <div class="h-full flex flex-col justify-center relative">
+                                            <h4 class="text-sm lg:text-base font-bold text-pink-500 uppercase tracking-[0.15em] mb-8 flex items-center gap-4">
+                                                The Vibe Coding Elevation <span class="h-px flex-1 bg-pink-100"></span>
+                                            </h4>
+                                            <div class="flex flex-wrap gap-4 mb-12">
+                                                <span class="px-6 py-3 bg-white text-pink-700 text-base lg:text-lg rounded-full font-bold shadow-sm border border-pink-100 flex items-center gap-2"><span class="text-xl">📱</span> Mobile-First Output</span>
+                                                <span class="px-6 py-3 bg-white text-purple-700 text-base lg:text-lg rounded-full font-bold shadow-sm border border-purple-100 flex items-center gap-2"><span class="text-xl">🎮</span> Personalised Gamification</span>
+                                            </div>
+                                            <ul class="point-list text-2xl lg:text-3xl font-medium leading-relaxed text-slate-700 space-y-8">
+                                                <li><strong class="text-pink-600">Speaking Skills:</strong> Zero-barrier <strong class="text-pink-600">mobile recording</strong> with WhatsApp sharing. Students can tap words to check syllables and choose <strong class="text-pink-600">native accents</strong> (TTS & STT).</li>
+                                                <li><strong class="text-purple-600">Vocab Learning:</strong> Uses <strong class="text-purple-600">cookies</strong> to remember and label mistakes. <strong class="text-purple-600">Gamified repetition</strong> allows students to continuously revisit weak areas, creating a truly <strong class="text-purple-600">personalised loop</strong>.</li>
+                                            </ul>
+                                            <button onclick="document.getElementById('flip2').classList.toggle('flipped')" class="absolute top-0 right-0 text-slate-400 hover:text-pink-600 p-4 bg-white rounded-full shadow-md hover:shadow-lg hover:scale-110 transition-all">
+                                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center mt-12">
+                    <a href="#area3" class="text-slate-300 hover:text-teal-500 transition-colors p-4"><svg class="w-12 h-12 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🌟 AREA 3: LLS Activities 🌟 -->
+        <section id="area3" class="snap-section min-h-[100dvh] flex flex-col justify-center pt-16 pb-8 px-6 relative z-10">
+            <div class="max-w-[90rem] mx-auto w-full flex-grow flex flex-col justify-center">
+                <div class="reveal interactive-card bg-white/95 backdrop-blur-xl rounded-[3rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-white">
+                    <div class="flex flex-col md:flex-row md:min-h-[700px] h-full">
+                        <div class="bg-gradient-to-br from-teal-500 to-emerald-600 md:w-5/12 min-h-[250px] p-12 lg:p-20 flex flex-col justify-center items-start text-white relative overflow-hidden z-10 shadow-[5px_0_15px_rgba(0,0,0,0.1)] rounded-t-[3rem] md:rounded-tr-none md:rounded-l-[3rem]">
+                            <div class="giant-number">03</div>
+                            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E')]"></div>
+                            <span class="text-8xl lg:text-9xl mb-8 relative z-10 filter drop-shadow-lg">🌍</span>
+                            <h2 class="text-5xl lg:text-7xl font-extrabold mb-6 leading-tight relative z-10 tracking-tight">LLS Activities<br><span class="text-3xl lg:text-4xl font-medium text-teal-100 mt-3 block">(Outside Class)</span></h2>
+                            <div class="inline-block px-6 py-3 bg-white/10 rounded-full backdrop-blur-md border border-white/20 relative z-10 mt-5">
+                                <p class="text-teal-50 font-semibold text-xl lg:text-2xl tracking-wide">As an LLS Supervisor...</p>
+                            </div>
+                        </div>
+
+                        <div class="md:w-7/12 relative flex flex-col">
+                            <div class="flip-container" id="flip3">
+                                <div class="flip-card">
+                                    <!-- FRONT -->
+                                    <div class="flip-face flip-front justify-center">
+                                        <div class="mb-12">
+                                            <h4 class="text-sm lg:text-base font-bold text-slate-400 uppercase tracking-[0.15em] mb-6 flex items-center gap-4">
+                                                The Challenges <span class="h-px flex-1 bg-slate-100"></span>
+                                            </h4>
+                                            <ul class="pain-list">
+                                                <li>"Scan or lose": Info boards are passive; students leave without tangible takeaways.</li>
+                                                <li>Hard to facilitate fruitful, interactive engagement during large-scale events.</li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="bg-slate-50/80 p-8 lg:p-10 rounded-[2rem] border border-slate-100 flex-grow mb-4 shadow-inner">
+                                            <h3 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-8 flex items-center"><span class="mr-4 text-teal-500 text-3xl lg:text-4xl">💡</span> Let's Experience It</h3>
+                                            <a href="https://vtc-lc-exercise.github.io/yckc-lc-llst-fashion-description/" target="_blank" class="btn-hover flex items-center justify-between p-5 lg:p-6 bg-white rounded-2xl border border-slate-200 group mb-6">
+                                                <div class="flex items-center">
+                                                    <div class="w-14 h-14 lg:w-16 lg:h-16 rounded-xl bg-teal-50 flex items-center justify-center mr-6 group-hover:scale-105 transition-transform duration-300 shadow-sm"><span class="text-3xl drop-shadow-sm">👗</span></div>
+                                                    <div>
+                                                        <h4 class="font-bold text-slate-800 group-hover:text-teal-600 transition-colors text-xl lg:text-2xl">LC × Fashion: Cupid's Tee</h4>
+                                                        <p class="text-sm lg:text-base text-slate-500 font-bold uppercase tracking-[0.15em] mt-1">Cross-disciplinary Platform</p>
+                                                    </div>
+                                                </div>
+                                                <span class="text-teal-500 font-bold text-2xl lg:text-3xl group-hover:translate-x-2 transition-transform mr-2">▶</span>
+                                            </a>
+                                            <div class="grid grid-cols-2 gap-5 mb-10">
+                                                <a href="https://vtc-lc-exercise.github.io/openday-pitchplease/" target="_blank" class="btn-hover p-5 lg:p-6 bg-white rounded-2xl border border-slate-200 group flex items-center">
+                                                    <span class="text-3xl lg:text-4xl mr-4 group-hover:scale-110 transition-transform duration-300 drop-shadow-sm">🎉</span>
+                                                    <div>
+                                                        <h4 class="font-bold text-slate-800 text-base lg:text-lg group-hover:text-teal-600">Open Day:</h4>
+                                                        <p class="text-xs lg:text-sm text-slate-500 font-bold uppercase tracking-[0.15em] mt-1">Pitch, please!</p>
+                                                    </div>
+                                                </a>
+                                                <a href="https://vtc-lc-exercise.github.io/AY2526-LLSC-Car-tography/" target="_blank" class="btn-hover p-5 lg:p-6 bg-white rounded-2xl border border-slate-200 group flex items-center">
+                                                    <span class="text-3xl lg:text-4xl mr-4 group-hover:scale-110 transition-transform duration-300 drop-shadow-sm">🚗</span>
+                                                    <div>
+                                                        <h4 class="font-bold text-slate-800 text-base lg:text-lg group-hover:text-teal-600">LC × Auto:</h4>
+                                                        <p class="text-xs lg:text-sm text-slate-500 font-bold uppercase tracking-[0.15em] mt-1">Car-tography</p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <button onclick="document.getElementById('flip3').classList.toggle('flipped')" class="flex items-center px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold text-lg lg:text-xl hover:bg-teal-600 transition-all duration-300 group w-fit shadow-lg hover:shadow-xl hover:-translate-y-1">
+                                                How did HTML elevate this? <svg class="w-6 h-6 ml-3 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- BACK -->
+                                    <div class="flip-face flip-back justify-center">
+                                        <div class="h-full flex flex-col justify-center relative">
+                                            <h4 class="text-sm lg:text-base font-bold text-teal-500 uppercase tracking-[0.15em] mb-8 flex items-center gap-4">
+                                                The Vibe Coding Elevation <span class="h-px flex-1 bg-teal-100"></span>
+                                            </h4>
+                                            <div class="flex flex-wrap gap-4 mb-12">
+                                                <span class="px-6 py-3 bg-white text-teal-700 text-base lg:text-lg rounded-full font-bold shadow-sm border border-teal-100 flex items-center gap-2"><span class="text-xl">🌍</span> Persistent Assets</span>
+                                                <span class="px-6 py-3 bg-white text-emerald-700 text-base lg:text-lg rounded-full font-bold shadow-sm border border-emerald-100 flex items-center gap-2"><span class="text-xl">🤝</span> CLIL Integration</span>
+                                            </div>
+                                            <ul class="point-list text-2xl lg:text-3xl font-medium leading-relaxed text-slate-700 space-y-8">
+                                                <li>Transforming temporary info boards into <strong class="text-teal-600">Persistent Digital Assets</strong> for students to revisit anytime.</li>
+                                                <li>Facilitating <strong class="text-teal-600">fruitful engagement</strong> and true cross-disciplinary learning (CLIL).</li>
+                                            </ul>
+                                            <button onclick="document.getElementById('flip3').classList.toggle('flipped')" class="absolute top-0 right-0 text-slate-400 hover:text-teal-600 p-4 bg-white rounded-full shadow-md hover:shadow-lg hover:scale-110 transition-all">
+                                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -420,12 +450,12 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <footer class="text-center mt-12 text-slate-400 text-sm font-medium w-full tracking-wide">
-            <p>ELEVATED VIA VIBE CODING • VTC LANGUAGES DISCIPLINE</p>
-        </footer>
-    </section>
+            <footer class="text-center mt-16 mb-8 text-slate-400 text-sm lg:text-base font-bold w-full tracking-[0.3em] uppercase">
+                <p>ELEVATED VIA VIBE CODING <span class="mx-3 text-slate-300">|</span> VTC LANGUAGES DISCIPLINE</p>
+            </footer>
+        </section>
+    </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
